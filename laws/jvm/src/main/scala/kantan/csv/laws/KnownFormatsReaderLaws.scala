@@ -16,10 +16,12 @@
 
 package kantan.csv.laws
 
-import kantan.csv.{rfc, RowCodec}
+import kantan.csv.RowCodec
 import kantan.csv.engine.ReaderEngine
 import kantan.csv.laws.KnownFormatsReaderLaws.Car
 import kantan.csv.ops._
+import kantan.csv.rfc
+
 import scala.io.Codec
 
 trait KnownFormatsReaderLaws {

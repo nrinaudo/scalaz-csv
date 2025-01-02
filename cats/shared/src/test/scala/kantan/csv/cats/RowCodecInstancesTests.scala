@@ -19,13 +19,18 @@ package kantan.csv.cats
 import cats.Eq
 import cats.data.EitherT
 import cats.instances.all._
-import cats.laws.discipline.{ContravariantTests, MonadErrorTests, SemigroupKTests}
+import cats.laws.discipline.ContravariantTests
+import cats.laws.discipline.MonadErrorTests
+import cats.laws.discipline.SemigroupKTests
 import cats.laws.discipline.SemigroupalTests.Isomorphisms
-import kantan.csv.{DecodeError, RowDecoder, RowEncoder}
+import kantan.csv.DecodeError
+import kantan.csv.RowDecoder
+import kantan.csv.RowEncoder
 import kantan.csv.cats.arbitrary._
 import kantan.csv.cats.equality._
 import kantan.csv.laws.discipline.DisciplineSuite
-import org.scalacheck.{Arbitrary, Gen}
+import org.scalacheck.Arbitrary
+import org.scalacheck.Gen
 
 class RowCodecInstancesTests extends DisciplineSuite {
   // Limits the size of rows to 10 - using the default size makes these tests prohibitively long in some contexts

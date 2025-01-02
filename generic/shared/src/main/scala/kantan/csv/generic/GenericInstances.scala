@@ -17,8 +17,14 @@
 package kantan.csv.generic
 
 import kantan.codecs.shapeless.ShapelessInstances
-import kantan.csv.{CellDecoder, CellEncoder, DecodeResult, RowDecoder, RowEncoder}
-import shapeless.{::, HList, HNil}
+import kantan.csv.CellDecoder
+import kantan.csv.CellEncoder
+import kantan.csv.DecodeResult
+import kantan.csv.RowDecoder
+import kantan.csv.RowEncoder
+import shapeless.::
+import shapeless.HList
+import shapeless.HNil
 
 trait GenericInstances extends ShapelessInstances {
 
@@ -48,12 +54,12 @@ trait GenericInstances extends ShapelessInstances {
   }
 
   implicit def hlistRowEncoder[H: CellEncoder, T <: HList: RowEncoder]: RowEncoder[H :: T] =
-    RowEncoder.from {
-      case h :: t => CellEncoder[H].encode(h) +: RowEncoder[T].encode(t)
+    RowEncoder.from { case h :: t =>
+      CellEncoder[H].encode(h) +: RowEncoder[T].encode(t)
     }
 
-  implicit def hlistCellEncoder[H: CellEncoder]: CellEncoder[H :: HNil] = CellEncoder[H].contramap {
-    case (h :: _) => h
+  implicit def hlistCellEncoder[H: CellEncoder]: CellEncoder[H :: HNil] = CellEncoder[H].contramap { case (h :: _) =>
+    h
   }
 
   implicit val hnilRowEncoder: RowEncoder[HNil] = RowEncoder.from(_ => Seq.empty)

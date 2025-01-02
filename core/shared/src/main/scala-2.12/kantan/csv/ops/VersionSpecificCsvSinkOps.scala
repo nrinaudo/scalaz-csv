@@ -21,8 +21,8 @@ import kantan.csv.engine.WriterEngine
 
 trait VersionSpecificCsvSinkOps[A] { self: CsvSinkOps[A] =>
   @deprecated("use writeCsv(rows, CsvConfiguration) instead", "0.1.18")
-  def writeCsv[B: HeaderEncoder](rows: TraversableOnce[B], sep: Char, header: String*)(
-    implicit e: WriterEngine,
+  def writeCsv[B: HeaderEncoder](rows: TraversableOnce[B], sep: Char, header: String*)(implicit
+    e: WriterEngine,
     sa: CsvSink[A]
   ): Unit =
     writeCsv(rows, rfc.withCellSeparator(sep).withHeader(header: _*))

@@ -16,9 +16,12 @@
 
 package kantan.csv.laws
 
-import kantan.csv.{rfc, CellDecoder, CellEncoder, CsvConfiguration}
+import kantan.csv.CellDecoder
+import kantan.csv.CellEncoder
+import kantan.csv.CsvConfiguration
 import kantan.csv.engine.WriterEngine
 import kantan.csv.ops._
+import kantan.csv.rfc
 
 trait RfcWriterLaws {
   implicit def engine: WriterEngine

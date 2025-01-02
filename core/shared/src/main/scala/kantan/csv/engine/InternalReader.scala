@@ -16,8 +16,10 @@
 
 package kantan.csv.engine
 
+import kantan.csv.CsvConfiguration
+import kantan.csv.CsvReader
+
 import java.io.Reader
-import kantan.csv.{CsvConfiguration, CsvReader}
 import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
 
@@ -219,10 +221,10 @@ private[engine] class InternalReader private (
       ()
   }
 
-  override def checkNext = hasNextChar || hasLeftover
+  override def checkNext: Boolean = hasNextChar || hasLeftover
 
   @SuppressWarnings(Array("org.wartremover.warts.Throw"))
-  override def readNext() = {
+  override def readNext(): Seq[String] = {
     row.clear()
     if(hasLeftover) nextRow(leftover)
     else if(hasNextChar) nextRow(nextChar())
@@ -231,7 +233,7 @@ private[engine] class InternalReader private (
     hasNextChar
     row.toSeq
   }
-  override def release() = data.close()
+  override def release(): Unit = data.close()
 }
 
 private object InternalReader {
@@ -244,18 +246,18 @@ private object InternalReader {
 
   // Possible reasons for breaking off a cell or row.
   case object Separator extends Break
-  case object CR        extends Break
-  case object LF        extends Break
-  case object EOF       extends Break
+  case object CR extends Break
+  case object LF extends Break
+  case object EOF extends Break
   sealed trait Break
 
   // Possible outcomes of parsing the beginning of a cell.
   final case class Finished(reason: Break) extends CellStart
-  val CSeparator = Finished(Separator)
-  val CCR        = Finished(CR)
-  val CLF        = Finished(LF)
-  val CEOF       = Finished(EOF)
+  val CSeparator: Finished = Finished(Separator)
+  val CCR: Finished        = Finished(CR)
+  val CLF: Finished        = Finished(LF)
+  val CEOF: Finished       = Finished(EOF)
   case object Escaped extends CellStart
-  case object Raw     extends CellStart
+  case object Raw extends CellStart
   sealed trait CellStart
 }

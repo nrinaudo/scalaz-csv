@@ -19,7 +19,6 @@ lazy val jvmModules: Seq[ProjectReference] = Seq(
   enumeratumJVM,
   genericJVM,
   jackson,
-  java8,
   lawsJVM,
   libra,
   refinedJVM,
@@ -53,7 +52,6 @@ lazy val docs = project
   .settings(libraryDependencies += "joda-time" % "joda-time" % Versions.jodaTime)
   .dependsOn(
     coreJVM,
-    java8,
     lawsJVM,
     libra,
     catsJVM,
@@ -67,12 +65,12 @@ lazy val docs = project
 
 lazy val benchmark = project
   .enablePlugins(UnpublishedPlugin, JmhPlugin)
-  .dependsOn(coreJVM, jackson, commons, lawsJVM % "test")
+  .dependsOn(coreJVM, jackson, commons, lawsJVM % Test)
   .settings(
     libraryDependencies ++= Seq(
-      "com.opencsv"          % "opencsv"           % Versions.opencsv,
-      "com.univocity"        % "univocity-parsers" % Versions.univocity,
-      "com.github.tototoshi" %% "scala-csv"        % Versions.scalaCsv
+      "com.opencsv"           % "opencsv"           % Versions.opencsv,
+      "com.univocity"         % "univocity-parsers" % Versions.univocity,
+      "com.github.tototoshi" %% "scala-csv"         % Versions.scalaCsv
     )
   )
 
@@ -105,7 +103,7 @@ lazy val lawsJS  = laws.js
 lazy val jackson = project
   .settings(moduleName := "kantan.csv-jackson")
   .enablePlugins(PublishedPlugin)
-  .dependsOn(coreJVM, lawsJVM % "test")
+  .dependsOn(coreJVM, lawsJVM % Test)
   .settings(
     libraryDependencies ++= Seq(
       "com.fasterxml.jackson.dataformat" % "jackson-dataformat-csv" % Versions.jacksonCsv
@@ -115,10 +113,10 @@ lazy val jackson = project
 lazy val commons = project
   .settings(moduleName := "kantan.csv-commons")
   .enablePlugins(PublishedPlugin)
-  .dependsOn(coreJVM, lawsJVM % "test")
+  .dependsOn(coreJVM, lawsJVM % Test)
   .settings(
     libraryDependencies ++= Seq(
-      "org.apache.commons"     % "commons-csv"              % Versions.commonsCsv,
+      "org.apache.commons"      % "commons-csv"             % Versions.commonsCsv,
       "org.scala-lang.modules" %% "scala-collection-compat" % Versions.collectionCompat
     )
   )
@@ -128,11 +126,11 @@ lazy val commons = project
 lazy val generic = kantanCrossProject("generic")
   .settings(moduleName := "kantan.csv-generic")
   .enablePlugins(PublishedPlugin)
-  .dependsOn(core, laws % "test")
+  .dependsOn(core, laws % Test)
   .settings(
     libraryDependencies ++= Seq(
       "com.nrinaudo" %%% "kantan.codecs-shapeless"      % Versions.kantanCodecs,
-      "com.nrinaudo" %%% "kantan.codecs-shapeless-laws" % Versions.kantanCodecs % "test"
+      "com.nrinaudo" %%% "kantan.codecs-shapeless-laws" % Versions.kantanCodecs % Test
     )
   )
 
@@ -144,11 +142,11 @@ lazy val genericJS  = generic.js
 lazy val scalaz = kantanCrossProject("scalaz")
   .settings(moduleName := "kantan.csv-scalaz")
   .enablePlugins(PublishedPlugin)
-  .dependsOn(core, laws % "test")
+  .dependsOn(core, laws % Test)
   .settings(
     libraryDependencies ++= Seq(
       "com.nrinaudo" %%% "kantan.codecs-scalaz"      % Versions.kantanCodecs,
-      "com.nrinaudo" %%% "kantan.codecs-scalaz-laws" % Versions.kantanCodecs % "test"
+      "com.nrinaudo" %%% "kantan.codecs-scalaz-laws" % Versions.kantanCodecs % Test
     )
   )
 
@@ -160,43 +158,27 @@ lazy val scalazJS  = scalaz.js
 lazy val cats = kantanCrossProject("cats")
   .settings(moduleName := "kantan.csv-cats")
   .enablePlugins(PublishedPlugin)
-  .dependsOn(core, laws % "test")
+  .dependsOn(core, laws % Test)
   .settings(
     libraryDependencies ++= Seq(
       "com.nrinaudo" %%% "kantan.codecs-cats"      % Versions.kantanCodecs,
-      "com.nrinaudo" %%% "kantan.codecs-cats-laws" % Versions.kantanCodecs % "test"
+      "com.nrinaudo" %%% "kantan.codecs-cats-laws" % Versions.kantanCodecs % Test
     )
   )
 
 lazy val catsJVM = cats.jvm
 lazy val catsJS  = cats.js
 
-// - java8 projects ----------------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------------------------------
-lazy val java8 = project
-  .settings(
-    moduleName := "kantan.csv-java8",
-    name       := "java8"
-  )
-  .enablePlugins(PublishedPlugin)
-  .dependsOn(coreJVM, lawsJVM % "test")
-  .settings(
-    libraryDependencies ++= Seq(
-      "com.nrinaudo" %% "kantan.codecs-java8"      % Versions.kantanCodecs,
-      "com.nrinaudo" %% "kantan.codecs-java8-laws" % Versions.kantanCodecs % "test"
-    )
-  )
-
 // - refined project ---------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
 lazy val refined = kantanCrossProject("refined")
   .settings(moduleName := "kantan.csv-refined")
   .enablePlugins(PublishedPlugin)
-  .dependsOn(core, laws % "test")
+  .dependsOn(core, laws % Test)
   .settings(
     libraryDependencies ++= Seq(
       "com.nrinaudo" %%% "kantan.codecs-refined"      % Versions.kantanCodecs,
-      "com.nrinaudo" %%% "kantan.codecs-refined-laws" % Versions.kantanCodecs % "test"
+      "com.nrinaudo" %%% "kantan.codecs-refined-laws" % Versions.kantanCodecs % Test
     )
   )
 
@@ -208,11 +190,11 @@ lazy val refinedJS  = refined.js
 lazy val enumeratum = kantanCrossProject("enumeratum")
   .settings(moduleName := "kantan.csv-enumeratum")
   .enablePlugins(PublishedPlugin)
-  .dependsOn(core, laws % "test")
+  .dependsOn(core, laws % Test)
   .settings(
     libraryDependencies ++= Seq(
       "com.nrinaudo" %%% "kantan.codecs-enumeratum"      % Versions.kantanCodecs,
-      "com.nrinaudo" %%% "kantan.codecs-enumeratum-laws" % Versions.kantanCodecs % "test"
+      "com.nrinaudo" %%% "kantan.codecs-enumeratum-laws" % Versions.kantanCodecs % Test
     )
   )
 
@@ -227,11 +209,11 @@ lazy val libra = project
     name       := "libra"
   )
   .enablePlugins(PublishedPlugin)
-  .dependsOn(coreJVM, lawsJVM % "test")
+  .dependsOn(coreJVM, lawsJVM % Test)
   .settings(
     libraryDependencies ++= Seq(
       "com.nrinaudo" %% "kantan.codecs-libra"      % Versions.kantanCodecs,
-      "com.nrinaudo" %% "kantan.codecs-libra-laws" % Versions.kantanCodecs % "test"
+      "com.nrinaudo" %% "kantan.codecs-libra-laws" % Versions.kantanCodecs % Test
     )
   )
 

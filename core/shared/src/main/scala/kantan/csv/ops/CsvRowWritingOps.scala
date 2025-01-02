@@ -16,8 +16,10 @@
 
 package kantan.csv.ops
 
-import kantan.csv.{rfc, CsvConfiguration, RowEncoder}
+import kantan.csv.CsvConfiguration
+import kantan.csv.RowEncoder
 import kantan.csv.engine.WriterEngine
+import kantan.csv.rfc
 
 /** Provides syntax for encoding single CSV rows as a string.
   *

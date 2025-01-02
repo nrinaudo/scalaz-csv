@@ -29,9 +29,9 @@ final class CsvRowsOps[A: HeaderEncoder](val as: TraversableOnce[A]) {
   /** Writes collections of `A` as a CSV string.
     *
     * @example
-    * {{{
+    *   {{{
     * scala> List(List(1, 2, 3), List(4, 5, 6)).asCsv(rfc)
-    * }}}
+    *   }}}
     */
   def asCsv(conf: CsvConfiguration)(implicit e: WriterEngine): String = {
     val out = new StringWriter()

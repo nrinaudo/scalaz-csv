@@ -16,9 +16,10 @@
 
 package kantan.csv
 
-import java.io.Writer
 import kantan.codecs.resource.WriterResource
 import kantan.csv.engine.WriterEngine
+
+import java.io.Writer
 
 /** Type class for all types that can be turned into [[CsvWriter]] instances.
   *
@@ -38,8 +39,10 @@ trait CsvSink[-S] extends VersionSpecificCsvSink[S] with Serializable { self =>
 
   /** Opens a [[CsvWriter]] on the specified `S`.
     *
-    * @param s what to open a [[CsvWriter]] on.
-    * @param conf CSV writing behaviour.
+    * @param s
+    *   what to open a [[CsvWriter]] on.
+    * @param conf
+    *   CSV writing behaviour.
     */
   def writer[A: HeaderEncoder](s: S, conf: CsvConfiguration)(implicit e: WriterEngine): CsvWriter[A] =
     CsvWriter(open(s), conf)
@@ -72,8 +75,8 @@ object CsvSink {
 
   /** Turns the specified function into a [[CsvSink]].
     *
-    * Note that it's usually better to compose an existing instance through [[CsvSink.contramap]] rather than create
-    * one from scratch.
+    * Note that it's usually better to compose an existing instance through [[CsvSink.contramap]] rather than create one
+    * from scratch.
     */
   def from[A](f: A => Writer): CsvSink[A] = new CsvSink[A] {
     override def open(s: A): Writer = f(s)

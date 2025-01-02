@@ -29,9 +29,8 @@ trait HeaderDecoder[A] extends Serializable { self =>
   def fromHeader(header: Seq[String]): DecodeResult[RowDecoder[A]]
   def noHeader: RowDecoder[A]
 
-  /**
-    * Combines two header decoders creating a tupled version that will decode the results from both. The combination will preserve the order
-    * of the merge in the case that no headers are detected.
+  /** Combines two header decoders creating a tupled version that will decode the results from both. The combination
+    * will preserve the order of the merge in the case that no headers are detected.
     */
   def ~[B](that: HeaderDecoder[B])(implicit zippable: Zippable[A, B]): HeaderDecoder[zippable.Out] =
     new HeaderDecoder[zippable.Out] {
@@ -61,12 +60,11 @@ object HeaderDecoder extends GeneratedHeaderDecoders {
   def apply[A](implicit ev: HeaderDecoder[A]): HeaderDecoder[A] = macro imp.summon[HeaderDecoder[A]]
 
   private[csv] def determineRowMappings(requiredHeader: Seq[String], csvHeader: Seq[String]): DecodeResult[Seq[Int]] =
-    requiredHeader.foldLeft((List.empty[String], List.empty[Int])) {
-      case ((missing, found), header) =>
-        val index = csvHeader.indexOf(header)
+    requiredHeader.foldLeft((List.empty[String], List.empty[Int])) { case ((missing, found), header) =>
+      val index = csvHeader.indexOf(header)
 
-        if(index < 0) (header :: missing, found)
-        else (missing, index :: found)
+      if(index < 0) (header :: missing, found)
+      else (missing, index :: found)
     } match {
       case (missing, _) if missing.nonEmpty =>
         DecodeResult.typeError(s"Missing header(s): ${missing.reverse.mkString(", ")}")

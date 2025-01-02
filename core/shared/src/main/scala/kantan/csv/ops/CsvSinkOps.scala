@@ -16,8 +16,12 @@
 
 package kantan.csv.ops
 
-import kantan.csv.{rfc, CsvConfiguration, CsvSink, CsvWriter, HeaderEncoder}
+import kantan.csv.CsvConfiguration
+import kantan.csv.CsvSink
+import kantan.csv.CsvWriter
+import kantan.csv.HeaderEncoder
 import kantan.csv.engine.WriterEngine
+import kantan.csv.rfc
 
 /** Provides useful syntax for types that have implicit instances of [[CsvSink]] in scope.
   *

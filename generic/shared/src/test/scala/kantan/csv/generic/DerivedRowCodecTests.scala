@@ -16,12 +16,16 @@
 
 package kantan.csv.generic
 
-import kantan.codecs.shapeless.laws.{Left, Or, Right}
+import kantan.codecs.shapeless.laws.Left
+import kantan.codecs.shapeless.laws.Or
+import kantan.codecs.shapeless.laws.Right
 import kantan.csv.generic.Instances._
 import kantan.csv.generic.arbitrary._
 import kantan.csv.laws.LegalRow
-import kantan.csv.laws.discipline.{DisciplineSuite, RowCodecTests}
+import kantan.csv.laws.discipline.DisciplineSuite
 import org.scalacheck.Arbitrary
+
+import kantan.csv.laws.discipline.RowCodecTests
 
 object Instances {
   case class Simple(i: Int)

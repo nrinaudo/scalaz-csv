@@ -16,7 +16,8 @@
 
 package kantan.csv
 
-import kantan.csv.CsvConfiguration.{Header, QuotePolicy}
+import kantan.csv.CsvConfiguration.Header
+import kantan.csv.CsvConfiguration.QuotePolicy
 
 /** Configuration for how to read / write CSV data.
   *
@@ -63,7 +64,7 @@ object CsvConfiguration {
 
   sealed abstract class QuotePolicy extends Product with Serializable
   object QuotePolicy {
-    case object Always     extends QuotePolicy
+    case object Always extends QuotePolicy
     case object WhenNeeded extends QuotePolicy
   }
 
@@ -84,8 +85,8 @@ object CsvConfiguration {
 
     /** Use the specified header.
       *
-      * This is equivalent to [[Implicit]] when decoding. When encoding, it takes precedence over whatever header
-      * might have been defined through a [[HeaderEncoder]] instance.
+      * This is equivalent to [[Implicit]] when decoding. When encoding, it takes precedence over whatever header might
+      * have been defined through a [[HeaderEncoder]] instance.
       */
     final case class Explicit(header: Seq[String]) extends Header
   }

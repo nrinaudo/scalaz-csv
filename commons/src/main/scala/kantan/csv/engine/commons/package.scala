@@ -17,8 +17,12 @@
 package kantan.csv.engine
 
 import kantan.codecs.resource.ResourceIterator
-import kantan.csv.{CsvConfiguration, CsvWriter}
-import org.apache.commons.csv.{CSVFormat, CSVPrinter, QuoteMode}
+import kantan.csv.CsvConfiguration
+import kantan.csv.CsvWriter
+import org.apache.commons.csv.CSVFormat
+import org.apache.commons.csv.CSVPrinter
+import org.apache.commons.csv.QuoteMode
+
 import scala.jdk.CollectionConverters._
 
 /** Provides CSV reader and writer engines using [[https://commons.apache.org/proper/commons-csv/ commons-csv]].

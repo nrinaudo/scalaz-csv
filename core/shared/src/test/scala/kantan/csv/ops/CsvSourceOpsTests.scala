@@ -17,12 +17,14 @@
 package kantan.csv.ops
 
 import kantan.codecs.laws.CodecValue
-import kantan.csv.laws.{asCsv, RowValue}
+import kantan.csv.laws.RowValue
+import kantan.csv.laws.asCsv
 import kantan.csv.laws.discipline.arbitrary._
 import kantan.csv.rfc
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
+
 import scala.util.Try
 
 class CsvSourceOpsTests extends AnyFunSuite with ScalaCheckPropertyChecks with Matchers {

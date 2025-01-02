@@ -16,8 +16,13 @@
 
 package kantan.csv.laws
 
-import kantan.csv.{CellDecoder, CellEncoder, DecodeResult}
-import org.scalacheck.{Arbitrary, Cogen, Gen, Shrink}
+import kantan.csv.CellDecoder
+import kantan.csv.CellEncoder
+import kantan.csv.DecodeResult
+import org.scalacheck.Arbitrary
+import org.scalacheck.Cogen
+import org.scalacheck.Gen
+import org.scalacheck.Shrink
 
 sealed trait Cell extends Product with Serializable {
   def value: String
@@ -27,7 +32,7 @@ sealed trait Cell extends Product with Serializable {
 
 object Cell {
   final case class Escaped private[Cell] (override val value: String) extends Cell {
-    override def encoded = "\"" + value.replaceAll("\"", "\"\"") + "\""
+    override def encoded: String = "\"" + value.replaceAll("\"", "\"\"") + "\""
   }
 
   final case class NonEscaped private[Cell] (override val value: String) extends Cell {
@@ -53,7 +58,7 @@ object Cell {
 
   // - CSV character generators ----------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
-  val nonEscapedChar: Gen[Char] = Gen.oneOf((0x20 to 0x21) ++ (0x23 to 0x2B) ++ (0x2D to 0x7E)).map(_.toChar)
+  val nonEscapedChar: Gen[Char] = Gen.oneOf((0x20 to 0x21) ++ (0x23 to 0x2b) ++ (0x2d to 0x7e)).map(_.toChar)
   val escapedChar: Gen[Char]    = Gen.oneOf(',', '"', '\r', '\n')
 
   // - CSV cell generators ---------------------------------------------------------------------------------------------

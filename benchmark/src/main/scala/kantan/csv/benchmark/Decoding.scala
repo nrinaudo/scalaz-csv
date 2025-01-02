@@ -17,12 +17,19 @@
 package kantan.csv.benchmark
 
 import com.univocity.parsers.csv.CsvParserSettings
-import java.io.StringReader
-import java.util.concurrent.TimeUnit
-import kantan.csv.{rfc, CsvSource}
+import kantan.csv.CsvSource
 import kantan.csv.engine.ReaderEngine
 import kantan.csv.engine.jackson.defaultMappingIteratorBuilder
-import org.openjdk.jmh.annotations.{Benchmark, BenchmarkMode, Mode, OutputTimeUnit, Scope, State}
+import kantan.csv.rfc
+import org.openjdk.jmh.annotations.Benchmark
+import org.openjdk.jmh.annotations.BenchmarkMode
+import org.openjdk.jmh.annotations.Mode
+import org.openjdk.jmh.annotations.OutputTimeUnit
+import org.openjdk.jmh.annotations.Scope
+import org.openjdk.jmh.annotations.State
+
+import java.io.StringReader
+import java.util.concurrent.TimeUnit
 
 @State(Scope.Thread)
 @BenchmarkMode(Array(Mode.AverageTime))
@@ -110,6 +117,7 @@ object Decoding {
     new CsvIterator(parser)(_.parseNext()).toList
   }
 
+  @SuppressWarnings(Array("org.wartremover.warts.SeqApply"))
   def scalaCsv(str: String): List[CsvEntry] = {
     import com.github.tototoshi.csv.CSVReader
 
